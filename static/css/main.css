@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merriweather&family=Poppins:ital,wght@1,300&display=swap");
+
+.my-bg {
+  background-image: url("../images/1158056.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: calc(100vh - 56px);
+}
+
+.my-nav {
+  background-color: #171717;
+}
+
+.my-img {
+  width: 40px;
+  max-height: 40px !important;
+}
+
+.my-line {
+  width: 0.5px;
+  height: 40px;
+  border-left: 1px solid grey;
+}
+
+.my-title {
+  font-family: "Merriweather", serif;
+  letter-spacing: -0.05em;
+}
+
+.my-box {
+  background-color: #171717;
+  width: 40vw;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+.my-subtitle {
+  font-family: "Poppins", sans-serif;
+}
+
+.my-btn {
+  background-color: #d87945;
+  border: none;
+}
+
+.hero-head {
+  font-family: "Bebas Neue", cursive;
+}
+
+.line-height {
+  line-height: 40px;
+}
+
+.my-box-2 {
+  box-shadow: 0px 4px 12px 0px #0000001a;
+  background-color: #171717;
+}
+
+
+.border {
+  border-right: 1px solid #fff;
+}

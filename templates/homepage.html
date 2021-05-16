@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hello Bulma!</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+  </head>
+  <body>
+    <nav class="navbar my-nav" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="/static/images/703e02b53cb97fa45cef8b156e4b0e4a.jpg" />
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu is-active">
+        <div class="navbar-end">
+          <div class="navbar-item">
+            {% if user %}
+            <img src="{{user.picture}}" class="my-img" />
+            <div class="my-line mx-2"></div>
+            <a class="button my-title my-btn has-text-white" href="/logout">
+              Sign Out
+            </a>
+            {% else %}
+            <a class="button my-title my-btn has-text-white" href="/login">
+              Sign In
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="hero my-bg">
+      <div class="hero-body">
+        <div class="has-text-centered my-box pt-5 pb-6 mt-6">
+          <p class="my-title is-size-2 has-text-white">Hero DB</p>
+          <p class="my-subtitle has-text-white">Check the details of your fav superhero!</p>
+          <form method="post" class="mt-4">
+            <div class="field has-addons is-justify-content-center">
+              <div class="control">
+                <input
+                  class="input my-title"
+                  type="text"
+                  name="supe-name"
+                  placeholder="Enter a superhero's name"
+                />
+              </div>
+              <div class="control">
+                <button class="button is-info my-title" type="submit">
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
