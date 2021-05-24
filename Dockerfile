@@ -1,10 +1,8 @@
-FROM python:3.8.1
+FROM tiangolo/uwsgi-nginx-flask:python3.8
 
 WORKDIR /app
 COPY . /app/
 
 RUN pip install -r requirements.txt
 
-RUN ./bulma-setup.sh
-
-CMD [ "/bin/bash" ]
+# CMD [ "uwsgi", "--socket", "0.0.0.0:5000", "--protocol=http", "-w", "wsgi:app"  ]
