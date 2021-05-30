@@ -78,6 +78,7 @@ def logout():
     session.clear()
     # Redirect user to logout endpoint
     params = {'returnTo': url_for('index', _external=True), 'client_id': os.environ.get('CLIENT_ID')}
+    return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
