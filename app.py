@@ -73,7 +73,7 @@ def results():
 
     return render_template('results.html', data=results)
 
-@app.get('/logout'):
+@app.get('/logout')
 def logout():
     session.clear()
     # Redirect user to logout endpoint
