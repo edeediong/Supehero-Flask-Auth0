@@ -4,7 +4,7 @@ import json
 
 from flask import Flask, render_template, request, session, jsonify, redirect, url_for
 from dotenv import load_dotenv
-from authlib.integrations.flask.client import OAuth
+from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 
 load_dotenv()
@@ -28,14 +28,22 @@ auth0 = oauth.register(
 
 # Client Kwargs are specified in order to return user info when successfully logged in
 
-@app.get('/login')
-def login():
-    # Auth0 authorizes our callback route and redirects to it's login page
-    return auth0.authorize_redirect(redirect_uri='http://localhost:5000/callback')
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == "GET":
+        return render_template('homepage.html', user=session.get('jwt_payload'))
+    elif request.method == "POST":
+        name = request.form.get('supe-name')
+        url = "https://superheroapi.com/api/" + os.environ.get('API_ACCESS_KEY') + "/search/" + name
+
+        results = requests.get(url).json()
+
+        session['results'] = results
+        return redirect(url_for('results'))
 
 @app.route('/callback')
 def handle_callback():
-    # This verifies the user's identify when logged in and returns the user data in json
+    '''This verifies the user's identify when logged in and returns the user data in json.'''
     auth0.authorize_access_token()
     resp = auth0.get('userinfo')
     user_info = resp.json()
@@ -49,19 +57,6 @@ def handle_callback():
 
     return redirect(url_for('index'))
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == "GET":
-        return render_template('homepage.html')
-    elif request.method == "POST":
-        name = request.form.get('supe-name')
-        url = "https://superheroapi.com/api/" + os.environ.get('API_ACCESS_KEY') + "/search/" + name
-
-        results = requests.get(url).json()
-
-        session['results'] = results
-        return redirect(url_for('results'))
-
 @app.get('/results')
 def results():
     results = session.get('results')
@@ -71,7 +66,12 @@ def results():
         if results is not None:
             return render_template('results.html', data=results, user=user_info)
 
-    return render_template('results.html', data=results)
+    return redirect('/login')
+
+@app.get('/login')
+def login():
+    # Auth0 authorizes our callback route and redirects to it's login page
+    return auth0.authorize_redirect(redirect_uri='http://localhost:5000/callback')
 
 @app.get('/logout')
 def logout():
