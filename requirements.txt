@@ -1,5 +1,6 @@
-flask
-python-dotenv
-requests
-authlib
-six
+Flask==2.0.0
+python-dotenv==0.17.1
+requests==2.25.1
+Authlib==0.15.3
+six==1.16.0
+gunicorn==20.1.0
