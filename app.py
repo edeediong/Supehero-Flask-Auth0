@@ -1,9 +1,8 @@
 import os
-import requests
-import json
-
 from flask import Flask, render_template, request, session, jsonify, redirect, url_for
 from dotenv import load_dotenv
+import requests
+import json
 
 load_dotenv()
 
@@ -16,11 +15,17 @@ def index():
         return render_template('homepage.html')
     elif request.method == "POST":
         name = request.form.get('supe-name')
-        url = "https://superheroapi.com/api/" + os.environ.get('API_ACCESS_KEY') + "/search/" + name
+        url = 'https://akabab.github.io/superhero-api/api/all.json'
 
         results = requests.get(url).json()
 
-        session['results'] = results
+        supe_details = []
+        for x in results:
+            if (name.lower() in x['name'].lower()):
+                supe_details.append(x)
+
+        session['results'] = supe_details
+        
         return redirect(url_for('results'))
 
 @app.route('/results', methods=['GET'])

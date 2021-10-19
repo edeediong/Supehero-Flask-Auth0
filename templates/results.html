@@ -39,7 +39,7 @@
         </div>
       </div>
     </nav>
-    {% if data.response == "error" %}
+    {% if data|length == 0 %}
     <section class="hero is-danger my-bg">
       <div class="hero-body">
         <article class="message is-danger my-box mt-6" >
@@ -58,22 +58,22 @@
     {% else %}
     <div class="container ">
       <div class="columns is-multiline mt-1">
-        {% for i in data.results %}
+        {% for i in data %}
   
         <div class="column is-12 mt-4 p-0 my-box-2 ">
           <div class="columns has-text-white">
             <div class="column is-3">
               <figure class="image">
-                <img src="{{i.image.url}}" />
+                <img src="{{i.images.lg}}" />
               </figure>
 
               <div class="pl-3 pb-3  has-background-black">
                 <p class="my-title is-size-3 hero-head pt-3">{{i.name}}</p>
                 
                 <p class="my-subtitle is-size-5">Biography</p>
-                <p class="my-title">Real Name: {{i.biography['full-name']}}</p>
+                <p class="my-title">Real Name: {{i.biography.fullName}}</p>
                 <p class="my-title" style="text-transform: capitalize;">Alignment: {{i.biography.alignment}}</p>
-                <p class="my-title">Alter-egos: {{i.biography['alter-egos']}}</p>
+                <p class="my-title">Alter-egos: {{i.biography.alterEgos}}</p>
                 <p class="my-title">Race: {{i.appearance.race}}</p>
               </div>
             </div>
