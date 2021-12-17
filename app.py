@@ -21,7 +21,9 @@ auth0 = oauth.register(
     api_base_url=os.environ.get("API_BASE_URL"),
     access_token_url=os.environ.get("API_BASE_URL") + "/oauth/token",
     authorize_url=os.environ.get("API_BASE_URL") + "/authorize",
-    client_kwargs={"scope": "openid profile"},
+    client_kwargs={
+        "scope": "openid profile"
+    }
 )
 
 # Client Kwargs are specified in order to return user info when successfully logged in
@@ -33,16 +35,17 @@ def index():
         return render_template("homepage.html", user=session.get("jwt_payload"))
     elif request.method == "POST":
         name = request.form.get("supe-name")
-        url = (
-            "https://superheroapi.com/api/"
-            + os.environ.get("API_ACCESS_KEY")
-            + "/search/"
-            + name
-        )
+        url = "https://akabab.github.io/superhero-api/api/all.json"
 
         results = requests.get(url).json()
 
-        session["results"] = results
+        supe_details = []
+        for x in results:
+            if (name.lower() in x["name"].lower()):
+                supe_details.append(x)
+
+        session["results"] = supe_details
+
         return redirect(url_for("results"))
 
 
@@ -53,6 +56,7 @@ def handle_callback():
     resp = auth0.get("userinfo")
     user_info = resp.json()
 
+    print(resp)
     # Save User Data to our session
     session["jwt_payload"] = user_info
 
@@ -71,7 +75,7 @@ def results():
     if user_info is not None:
         if results is not None:
             return render_template("results.html", data=results, user=user_info)
-
+         
     return redirect("/login")
 
 
@@ -93,5 +97,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=False)
