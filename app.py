@@ -81,8 +81,8 @@ def results():
 
 @app.get("/login")
 def login():
-        # Auth0 authorizes our callback route and redirects to it's login page
-    return auth0.authorize_redirect(redirect_uri=os.get.environ("YOUR_DOMAIN") + "/callback")
+    # Auth0 authorizes our callback route and redirects to it's login page
+    return auth0.authorize_redirect(redirect_uri=os.environ.get("YOUR_DOMAIN") + "/callback")
 
 
 @app.get("/logout")
